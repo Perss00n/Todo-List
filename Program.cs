@@ -1,24 +1,28 @@
-﻿using System;
+/*
+CREATED BY Perss00n
+Email: Perss00n@gmail.com
+Discord: Perss00n
+*/
+
+using System;
 using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ToDo
 {
     internal class Program
     {
+        // List to store the to-do items
         static List<string> toDo = new List<string>();
 
+        // Method to add a new task to the to-do list
         static void AddToDo()
         {
-            Console.Write("Enter a new task to your To-Do list: ");
-            string addItem = Console.ReadLine();
-            if (!string.IsNullOrEmpty(addItem))
+            Console.Write("Enter a new task to your To-Do list: "); // Prompt user for a new task
+            string addItem = Console.ReadLine(); // Read user input
+            if (!string.IsNullOrEmpty(addItem)) // Check if input is not empty
             {   
-                toDo.Add(addItem);
-                Console.Write("Item succesfully added to the list! Please press Enter to continue...");
+                toDo.Add(addItem); // Add the item to the list
+                Console.Write("Item successfully added to the list! Please press Enter to continue...");
             }
             else
             {
@@ -26,113 +30,114 @@ namespace ToDo
             }
         }
 
+        // Method to view all tasks in the to-do list
         static void ViewList()
         {
-            if (toDo.Count == 0)
+            if (toDo.Count == 0) // Check if the list is empty
             {
                 Console.Write("Your ToDo list is empty.\nPlease press Enter to continue...");
             }
             else
             {
-                Console.WriteLine("Your current To-Do List:");
-                for (int i = 0; i < toDo.Count; i++)
+                Console.WriteLine("Your current To-Do List:"); // Display the current to-do list
+                for (int i = 0; i < toDo.Count; i++) // Iterate through each item
                 {
-                    Console.WriteLine($"{i + 1}. {toDo[i]}");
+                    Console.WriteLine($"{i + 1}. {toDo[i]}"); // Display item with its index
                 }
                 Console.Write("Please press Enter to continue...");
             }
-           
         }
 
+        // Method to remove a task from the to-do list
         static void RemoveItem()
         {
             bool isValidInput;
-            if (toDo.Count == 0)
+            if (toDo.Count == 0) // Check if the list is empty
             {
                 Console.Write("Your ToDo list is empty.\nPlease press Enter to continue...");
             }
             else
             {
-                for (int i = 0; i < toDo.Count; i++)
+                for (int i = 0; i < toDo.Count; i++) // Display all items with indices
                 {
                     Console.WriteLine($"{i + 1}. {toDo[i]}");
                 }
-                Console.Write("Which item do you want to remove? ---> ");
-                isValidInput = Int32.TryParse(Console.ReadLine(), out int remove);
-                if (!isValidInput || remove < 1 || remove > toDo.Count)
+                Console.Write("Which item do you want to remove? ---> "); // Prompt user for index of item to remove
+                isValidInput = Int32.TryParse(Console.ReadLine(), out int remove); // Try to parse user input as an integer
+                if (!isValidInput || remove < 1 || remove > toDo.Count) // Check if input is valid
                 {
                     Console.Write("Invalid input! Please press Enter to continue...");
                 }
                 else
                 {
-                    toDo.RemoveAt(remove - 1);
-                    Console.Write("Item succesfully removed from the list! Please press Enter to continue...");
+                    toDo.RemoveAt(remove - 1); // Remove item at the specified index
+                    Console.Write("Item successfully removed from the list! Please press Enter to continue...");
                 }
             }
         }
 
+        // Method to clear all tasks from the to-do list
         static void ClearList()
         {
-            Console.Write("Warning! This will clear the whole list. Are you sure? (Y/N): ");
+            Console.Write("Warning! This will clear the whole list. Are you sure? (Y/N): "); // Prompt user for confirmation
 
-            string confirm = Console.ReadLine().ToUpper();
+            string confirm = Console.ReadLine().ToUpper(); // Read user input and convert to uppercase
                       
-
-                if (confirm != "Y" && confirm != "N")
+            if (confirm != "Y" && confirm != "N") // Check if input is valid
+            {
+                Console.WriteLine("Error! Please enter Y or N");
+            }
+            else
+            {
+                if (confirm == "Y") // If user confirms, clear the list
                 {
-                    Console.WriteLine("Error! Please enter Y or N");
+                    toDo.Clear();
+                    Console.Write("Success! Your ToDo list was cleared. Please press Enter to continue...");
                 }
                 else
                 {
-                    if (confirm == "Y")
-                    {
-                        toDo.Clear();
-                        Console.Write("Succcess!You'r ToDo list was cleared. Please press Enter to continue...");
-                    }
-                    else
-                    {
-                        Console.Write("No worries! Nothing was deleted. Please press enter to continue...");
-                    }                    
-                }
+                    Console.Write("No worries! Nothing was deleted. Please press enter to continue...");
+                }                    
+            }
         }
 
+        // Main method where the program starts
         static void Main(string[] args)
         {
-            while (true)
+            while (true) // Infinite loop to keep the program running
             {
                 Console.WriteLine("###ToDo List###");
-                Console.WriteLine("[A]dd");
-                Console.WriteLine("[V]iew");
-                Console.WriteLine("[D]elete");
-                Console.WriteLine("[C]lear List");
-                Console.WriteLine("[E]xit");
+                Console.WriteLine("[A]dd"); // Option to add a new task
+                Console.WriteLine("[V]iew"); // Option to view all tasks
+                Console.WriteLine("[D]elete"); // Option to delete a task
+                Console.WriteLine("[C]lear List"); // Option to clear all tasks
+                Console.WriteLine("[E]xit"); // Option to exit the program
 
-                char input = Convert.ToChar(Console.ReadLine().ToUpper());
+                char input = Convert.ToChar(Console.ReadLine().ToUpper()); // Read user input and convert to uppercase
 
+                // Switch case to handle different user choices
                 switch (input)
                 {
                     case 'A':
-                        AddToDo();
+                        AddToDo(); // Call method to add a new task
                         break;
                     case 'V':
-                        ViewList();
+                        ViewList(); // Call method to view the to-do list
                         break;
                     case 'D':
-                        RemoveItem();
+                        RemoveItem(); // Call method to remove a task
                         break;
                     case 'C':
-                        ClearList();
+                        ClearList(); // Call method to clear all tasks
                         break;
                     case 'E':
-                        return;                        
+                        return; // Exit the loop and end the program                        
                     default:
                         Console.Write("Error! Invalid Input!\nPlease press Enter to continue...");
                         break;
                 }
 
-
-
-                Console.ReadLine();
+                Console.ReadLine(); // Wait for user to press Enter before continuing
             }
         }
     }
